@@ -9,13 +9,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+<body className="bg-[#020617] text-white">
         <FinanceProvider>
-          <div className="flex">
+          <div className="flex min-h-screen">
+            
+            {/* Sidebar */}
             <Sidebar />
-            <main className="flex-1 p-8 bg-gray-50 min-h-screen">
-              {children}
+
+            {/* Main Content */}
+<main className="flex-1 p-8 bg-[#0f172a]">
+              <div className="max-w-7xl mx-auto">
+                {children}
+              </div>
             </main>
+
           </div>
         </FinanceProvider>
       </body>
