@@ -1,0 +1,74 @@
+import { Transaction } from "../models/Transaction";
+
+export const transactions: Transaction[] = [
+  new Transaction({
+    id: 1,
+    date: "2026-03-01",
+    amount: 5000,
+    category: "Salary",
+    type: "income",
+  }),
+  new Transaction({
+    id: 2,
+    date: "2026-03-02",
+    amount: 200,
+    category: "Food",
+    type: "expense",
+  }),
+  new Transaction({
+    id: 3,
+    date: "2026-03-03",
+    amount: 1000,
+    category: "Freelance",
+    type: "income",
+  }),
+  new Transaction({
+    id: 4,
+    date: "2026-03-04",
+    amount: 300,
+    category: "Transport",
+    type: "expense",
+  }),
+  new Transaction({
+    id: 5,
+    date: "2026-03-05",
+    amount: 150,
+    category: "Food",
+    type: "expense",
+  }),
+  new Transaction({
+    id: 6,
+    date: "2026-03-06",
+    amount: 2500,
+    category: "Salary",
+    type: "income",
+  }),
+  new Transaction({
+    id: 7,
+    date: "2026-03-07",
+    amount: 800,
+    category: "Shopping",
+    type: "expense",
+  }),
+  new Transaction({
+    id: 8,
+    date: "2026-03-08",
+    amount: 1200,
+    category: "Investment",
+    type: "income",
+  }),
+  new Transaction({
+    id: 9,
+    date: "2026-03-09",
+    amount: 400,
+    category: "Bills",
+    type: "expense",
+  }),
+  new Transaction({
+    id: 10,
+    date: "2026-03-10",
+    amount: 600,
+    category: "Food",
+    type: "expense",
+  }),
+];
