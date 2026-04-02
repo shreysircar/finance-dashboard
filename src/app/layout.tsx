@@ -17,10 +17,10 @@ export default function RootLayout({
             <Sidebar />
 
             {/* Main Content */}
-<main className="flex-1 p-8 bg-[#0f172a]">
-              <div className="max-w-7xl mx-auto">
-                {children}
-              </div>
+<main className="flex-1 p-8 bg-[#0f172a] min-h-0">
+<div className="max-w-7xl mx-auto min-h-0">
+  {children}
+</div>
             </main>
 
           </div>

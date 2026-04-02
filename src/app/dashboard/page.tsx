@@ -17,29 +17,46 @@ export default function DashboardPage() {
   const income = calculateIncome(transactions);
   const expenses = calculateExpenses(transactions);
 return (
-  <div className="space-y-8">
+  <div className="space-y-10">
 
     {/* Header */}
-    <div>
-      <h1 className="text-3xl font-bold">Dashboard</h1>
-      <p className="text-gray-400 text-sm">
-        Overview of your financial activity
-      </p>
+    <div className="flex items-center justify-between">
+      <div>
+        <h1 className="text-3xl font-semibold tracking-tight">
+          Dashboard
+        </h1>
+        <p className="text-gray-400 text-sm mt-1">
+          Overview of your financial activity
+        </p>
+      </div>
+
+      {/* Optional future: Add button */}
+      <div className="hidden sm:block">
+        <button className="bg-[#4a9eb3] hover:bg-[#3b889b] px-4 py-2 rounded-lg text-sm font-medium transition">
+          + Add Transaction
+        </button>
+      </div>
     </div>
 
     {/* Summary Cards */}
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
       <SummaryCard title="Total Balance" value={balance} />
       <SummaryCard title="Income" value={income} />
       <SummaryCard title="Expenses" value={expenses} />
+
     </div>
 
     {/* Charts Section */}
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
 
-      <BalanceChart transactions={transactions} />
+      <div className="min-h-0">
+        <BalanceChart transactions={transactions} />
+      </div>
 
-      <CategoryPieChart transactions={transactions} />
+      <div className="min-h-0">
+        <CategoryPieChart transactions={transactions} />
+      </div>
 
     </div>
 
