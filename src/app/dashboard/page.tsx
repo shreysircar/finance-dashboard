@@ -1,9 +1,10 @@
 "use client";
 
-import SummaryCard from "@/components/SummaryCard";
 import { useFinance } from "@/context/FinanceContext";
 import BalanceChart from "@/components/BalanceChart";
 import CategoryPieChart from "@/components/CategoryPieChart";
+import SummaryCard from "@/components/SummaryCard";
+
 import {
   calculateBalance,
   calculateIncome,
@@ -16,49 +17,62 @@ export default function DashboardPage() {
   const balance = calculateBalance(transactions);
   const income = calculateIncome(transactions);
   const expenses = calculateExpenses(transactions);
-return (
-  <div className="space-y-10">
 
-    {/* Header */}
-    <div className="flex items-center justify-between">
-      <div>
-        <h1 className="text-3xl font-semibold tracking-tight">
-          Dashboard
-        </h1>
-        <p className="text-gray-400 text-sm mt-1">
-          Overview of your financial activity
-        </p>
+  return (
+    <div className="space-y-10">
+
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-semibold tracking-tight">
+            Dashboard
+          </h1>
+          <p className="text-gray-400 text-sm mt-1">
+            Overview of your financial activity
+          </p>
+        </div>
+
+        <div className="hidden sm:block">
+          <button className="bg-[#4a9eb3] hover:bg-[#3b889b] px-4 py-2 rounded-lg text-sm font-medium transition">
+            + Add Transaction
+          </button>
+        </div>
       </div>
 
-      {/* Optional future: Add button */}
-      <div className="hidden sm:block">
-        <button className="bg-[#4a9eb3] hover:bg-[#3b889b] px-4 py-2 rounded-lg text-sm font-medium transition">
-          + Add Transaction
-        </button>
+      {/* ✅ Summary Cards (now direct + smarter) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <SummaryCard
+          title="Total Balance"
+          value={balance}
+          isCurrency
+        />
+
+        <SummaryCard
+          title="Income"
+          value={income}
+          isCurrency
+        />
+
+        <SummaryCard
+          title="Expenses"
+          value={expenses}
+          isCurrency
+        />
+
       </div>
+
+      {/* Charts Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+        <div className="min-h-0">
+          <BalanceChart transactions={transactions} />
+        </div>
+
+        <div className="min-h-0">
+          <CategoryPieChart transactions={transactions} />
+        </div>
+      </div>
+
     </div>
-
-    {/* Summary Cards */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-      <SummaryCard title="Total Balance" value={balance} />
-      <SummaryCard title="Income" value={income} />
-      <SummaryCard title="Expenses" value={expenses} />
-
-    </div>
-
-    {/* Charts Section */}
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
-
-      <div className="min-h-0">
-        <BalanceChart transactions={transactions} />
-      </div>
-
-      <div className="min-h-0">
-        <CategoryPieChart transactions={transactions} />
-      </div>
-
-    </div>
-
-  </div>
-);}
+  );
+}

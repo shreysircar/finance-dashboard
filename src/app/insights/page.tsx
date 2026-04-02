@@ -1,7 +1,7 @@
 "use client";
 
 import { useFinance } from "@/context/FinanceContext";
-import InsightCard from "@/components/InsightCard";
+import SummaryCard from "@/components/SummaryCard";
 import CategoryBarChart from "@/components/CategoryBarChart";
 
 import {
@@ -24,7 +24,7 @@ export default function InsightsPage() {
   return (
     <div className="space-y-10">
 
-      {/* Header (MATCH DASHBOARD) */}
+      {/* Header */}
       <div>
         <h1 className="text-3xl font-semibold tracking-tight text-white">
           Insights
@@ -34,22 +34,26 @@ export default function InsightsPage() {
         </p>
       </div>
 
-      {/* Cards */}
+      {/* ✅ Insight Cards with SummaryCard UI */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <InsightCard
-          title="Top Category"
-          value={`${topCategory.category} (₹ ${topCategory.amount.toLocaleString()})`}
-        />
+<SummaryCard
+  title="Top Category"
+  value={topCategory.category}
+  subtitle={`₹ ${topCategory.amount.toLocaleString()}`}
+/>
 
-        <InsightCard
-          title="Total Expenses"
-          value={`₹ ${totalExpenses.toLocaleString()}`}
-        />
+<SummaryCard
+  title="Total Expenses"
+  value={totalExpenses}
+  isCurrency
+/>
 
-        <InsightCard
-          title="Monthly Change"
-          value={`${monthly.change}% vs last month`}
-        />
+<SummaryCard
+  title="Monthly Change"
+  value={`${monthly.change}%`}
+  subtitle="vs last month"
+/>
+
       </div>
 
       {/* Chart */}
@@ -58,14 +62,7 @@ export default function InsightsPage() {
       </div>
 
       {/* Insight Box */}
-      <div
-        className="
-          relative p-6 rounded-2xl
-          bg-gradient-to-br from-[#1e293b] to-[#0f172a]
-          border border-[#334155]
-          shadow-lg
-        "
-      >
+      <div className="relative p-6 rounded-2xl bg-gradient-to-br from-[#1e293b] to-[#0f172a] border border-[#334155] shadow-lg">
         <h2 className="text-lg font-semibold text-white mb-2">
           Key Insight
         </h2>
