@@ -5,58 +5,67 @@ import { useFinance } from "@/context/FinanceContext";
 export default function TransactionTable() {
   const { transactions, deleteTransaction, role, filters } = useFinance();
 
-const filteredTransactions = transactions.filter((t) => {
-  const matchesType =
-    filters.type === "all" || t.type === filters.type;
+  const filteredTransactions = transactions.filter((t) => {
+    const matchesType =
+      filters.type === "all" || t.type === filters.type;
 
-  const matchesSearch = t.category
-    .toLowerCase()
-    .includes(filters.search.toLowerCase());
+    const matchesSearch = t.category
+      .toLowerCase()
+      .includes(filters.search.toLowerCase());
 
-  return matchesType && matchesSearch;
-});
+    return matchesType && matchesSearch;
+  });
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-sm overflow-x-auto">
-      <table className="w-full text-left">
-        <thead>
-          <tr className="text-gray-500 text-sm border-b">
-            <th className="pb-3">Date</th>
-            <th className="pb-3">Category</th>
-            <th className="pb-3">Type</th>
-            <th className="pb-3">Amount</th>
-            {role === "admin" && <th className="pb-3">Actions</th>}
-          </tr>
-        </thead>
+    <div className="space-y-3">
+      {filteredTransactions.map((t) => (
+        <div
+          key={t.id}
+          className="flex items-center justify-between bg-[#111827] p-4 rounded-xl hover:bg-[#1f2937] transition"
+        >
+          {/* Left Section */}
+          <div className="flex flex-col">
+            <span className="text-white font-medium">
+              {t.category}
+            </span>
+            <span className="text-sm text-gray-400">
+              {t.date}
+            </span>
+          </div>
 
-        <tbody>
-          {filteredTransactions.map((t) => (
-            <tr key={t.id} className="border-b last:border-none">
-              <td className="py-3">{t.date}</td>
-              <td className="py-3">{t.category}</td>
-              <td className="py-3 capitalize">{t.type}</td>
-              <td className="py-3">₹ {t.amount}</td>
+          {/* Middle Section */}
+          <div className="text-sm text-gray-400 capitalize">
+            {t.type}
+          </div>
 
-              {role === "admin" && (
-                <td className="py-3">
-                  <button
-                    onClick={() => deleteTransaction(t.id)}
-                    className="text-red-500 hover:underline"
-                  >
-                    Delete
-                  </button>
-                </td>
-              )}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+          {/* Amount */}
+          <div
+            className={`font-semibold ${
+              t.type === "income"
+                ? "text-green-400"
+                : "text-red-400"
+            }`}
+          >
+            {t.type === "income" ? "+" : "-"} ₹{t.amount}
+          </div>
+
+          {/* Actions */}
+          {role === "admin" && (
+            <button
+              onClick={() => deleteTransaction(t.id)}
+              className="text-red-400 hover:text-red-300 text-sm"
+            >
+              Delete
+            </button>
+          )}
+        </div>
+      ))}
 
       {/* Empty State */}
       {filteredTransactions.length === 0 && (
-        <p className="text-center text-gray-500 mt-4">
+        <div className="text-center text-gray-400 py-10">
           No transactions found
-        </p>
+        </div>
       )}
     </div>
   );
