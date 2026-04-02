@@ -1,6 +1,7 @@
 import "./globals.css";
 import Sidebar from "../components/Sidebar";
 import { FinanceProvider } from "@/context/FinanceContext";
+import { RoleProvider } from "@/context/RoleContext";
 
 export default function RootLayout({
   children,
@@ -9,22 +10,29 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-<body className="bg-[#020617] text-white">
-        <FinanceProvider>
-          <div className="flex min-h-screen">
-            
-            {/* Sidebar */}
-            <Sidebar />
+      <body className="bg-[#020617] text-white">
 
-            {/* Main Content */}
-<main className="flex-1 p-8 bg-[#0f172a] min-h-0">
-<div className="max-w-7xl mx-auto min-h-0">
-  {children}
-</div>
-            </main>
+        {/* ✅ Wrap BOTH providers */}
+        <RoleProvider>
+          <FinanceProvider>
 
-          </div>
-        </FinanceProvider>
+            <div className="flex min-h-screen">
+              
+              {/* Sidebar */}
+              <Sidebar />
+
+              {/* Main Content */}
+              <main className="flex-1 p-8 bg-[#0f172a] min-h-0">
+                <div className="max-w-7xl mx-auto min-h-0">
+                  {children}
+                </div>
+              </main>
+
+            </div>
+
+          </FinanceProvider>
+        </RoleProvider>
+
       </body>
     </html>
   );

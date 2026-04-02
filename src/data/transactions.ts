@@ -71,4 +71,11 @@ export const transactions: Transaction[] = [
     category: "Food",
     type: "expense",
   }),
+    new Transaction({
+    id: 11,
+    date: "2026-04-10",
+    amount: 600,
+    category: "Sports",
+    type: "expense",
+  }),
 ];
