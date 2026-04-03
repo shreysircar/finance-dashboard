@@ -31,16 +31,22 @@ useEffect(() => {
   const balance = calculateBalance(transactions);
   const income = calculateIncome(transactions);
   const expenses = calculateExpenses(transactions);
+  const [username, setUsername] = useState("");
+
+useEffect(() => {
+  const stored = localStorage.getItem("username");
+  if (stored) setUsername(stored);
+}, []);
   
 
   // ✅ Greeting logic
   const hour = new Date().getHours();
   const greeting =
     hour < 12
-      ? "Good morning"
+      ? "Good Morning"
       : hour < 18
-      ? "Good afternoon"
-      : "Good evening";
+      ? "Good Afternoon"
+      : "Good Evening";
 
   return (
     <div className="space-y-10">
@@ -54,7 +60,7 @@ useEffect(() => {
 
           {/* ✅ NEW Greeting */}
           <p className="text-gray-400 text-sm mt-1">
-            {greeting} 👋 — here's your financial overview
+           {greeting} {username ? `, ${username}` : ""}  — here's your financial overview
           </p>
         </div>
 
