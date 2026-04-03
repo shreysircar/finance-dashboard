@@ -1,8 +1,13 @@
 "use client";
 
 import { useFinance } from "@/context/FinanceContext";
+import { Transaction } from "@/models/Transaction";
 
-export default function TransactionTable() {
+export default function TransactionTable({
+  onEdit,
+}: {
+  onEdit?: (t: Transaction) => void;
+}) {
   const { transactions, deleteTransaction, role, filters } = useFinance();
 
   const filteredTransactions = transactions.filter((t) => {
@@ -17,30 +22,72 @@ export default function TransactionTable() {
   });
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2">
+
+      {/* 🔹 Header */}
+      <div
+        className={`grid px-5 py-2 text-xs text-gray-500 uppercase tracking-wide
+        ${role === "viewer"
+          ? "grid-cols-[1.5fr_1.2fr_1fr_1fr]"
+          : "grid-cols-[1.5fr_1fr_1fr_1fr_auto]"
+        }`}
+      >
+        {role === "viewer" && <span>Title</span>}
+        <span>Category</span>
+        <span>Type</span>
+        <span className="text-right">Amount</span>
+        {role === "admin" && <span className="text-right">Actions</span>}
+      </div>
+
+      {/* 🔹 Rows */}
       {filteredTransactions.map((t) => (
         <div
           key={t.id}
-          className="flex items-center justify-between bg-[#111827] p-4 rounded-xl hover:bg-[#1f2937] transition"
+          className={`group grid items-center
+          ${role === "viewer"
+            ? "grid-cols-[1.5fr_1.2fr_1fr_1fr]"
+            : "grid-cols-[1.5fr_1fr_1fr_1fr_auto]"
+          }
+          bg-[#0b1220]
+          px-5 py-3  /* 🔥 reduced height */
+          rounded-xl
+          border border-transparent
+          hover:border-white/10 hover:bg-[#111827]
+          transition-all duration-200`}
         >
-          {/* Left Section */}
-          <div className="flex flex-col">
-            <span className="text-white font-medium">
+
+          {/* 👀 Title */}
+          {role === "viewer" && (
+            <div className="text-sm text-white font-medium truncate">
+              {t.title}
+            </div>
+          )}
+
+          {/* Category + Date */}
+          <div className="flex flex-col justify-center">
+            <span className="text-sm text-white">
               {t.category}
             </span>
-            <span className="text-sm text-gray-400">
+            <span className="text-xs text-gray-500">
               {t.date}
             </span>
           </div>
 
-          {/* Middle Section */}
-          <div className="text-sm text-gray-400 capitalize">
+          {/* Type */}
+          <div
+            className={`text-xs px-2 py-1 rounded-md w-fit capitalize
+            ${
+              t.type === "income"
+                ? "bg-green-400/10 text-green-400"
+                : "bg-red-400/10 text-red-400"
+            }`}
+          >
             {t.type}
           </div>
 
           {/* Amount */}
           <div
-            className={`font-semibold ${
+            className={`text-sm font-semibold text-right ${
               t.type === "income"
                 ? "text-green-400"
                 : "text-red-400"
@@ -49,21 +96,30 @@ export default function TransactionTable() {
             {t.type === "income" ? "+" : "-"} ₹{t.amount}
           </div>
 
-          {/* Actions */}
+          {/* Actions (INLINE now) */}
           {role === "admin" && (
-            <button
-              onClick={() => deleteTransaction(t.id)}
-              className="text-red-400 hover:text-red-300 text-sm"
-            >
-              Delete
-            </button>
+            <div className="flex justify-end gap-2 text-xs opacity-0 group-hover:opacity-100 transition">
+              <button
+                onClick={() => onEdit?.(t)}
+                className="px-2 py-1 rounded-md text-blue-400 hover:bg-blue-400/10"
+              >
+                Edit
+              </button>
+
+              <button
+                onClick={() => deleteTransaction(t.id)}
+                className="px-2 py-1 rounded-md text-red-400 hover:bg-red-400/10"
+              >
+                Delete
+              </button>
+            </div>
           )}
         </div>
       ))}
 
-      {/* Empty State */}
+      {/* 🔹 Empty */}
       {filteredTransactions.length === 0 && (
-        <div className="text-center text-gray-400 py-10">
+        <div className="text-center text-gray-500 py-12 text-sm">
           No transactions found
         </div>
       )}

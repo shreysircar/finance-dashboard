@@ -24,7 +24,8 @@ interface FinanceContextType {
   setFilters: (filters: Filters) => void;
 
   addTransaction: (t: Transaction) => void;
-  deleteTransaction: (id: number) => void;
+  updateTransaction: (t: Transaction) => void; // ✅ ADDED
+  deleteTransaction: (id: string) => void; // ✅ FIXED
 }
 
 // 📦 Create Context
@@ -52,11 +53,16 @@ export const FinanceProvider = ({
     setTransactions((prev) => [...prev, t]);
   };
 
-  // ❌ Delete Transaction
-  const deleteTransaction = (id: number) => {
-    setTransactions((prev) => prev.filter((t) => t.id !== id));
-  };
+const updateTransaction = (updated: Transaction) => {
+  setTransactions((prev) =>
+    prev.map((tx) => (tx.id === updated.id ? updated : tx))
+  );
+};
 
+  // ❌ Delete Transaction
+const deleteTransaction = (id: string) => {
+  setTransactions((prev) => prev.filter((t) => t.id !== id));
+};
   return (
     <FinanceContext.Provider
       value={{
@@ -66,6 +72,7 @@ export const FinanceProvider = ({
         setRole,
         setFilters,
         addTransaction,
+        updateTransaction,
         deleteTransaction,
       }}
     >

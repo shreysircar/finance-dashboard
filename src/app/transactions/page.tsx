@@ -1,9 +1,18 @@
 "use client";
 
+import { useState } from "react";
 import TransactionTable from "@/components/TransactionTable";
 import FilterBar from "@/components/FilterBar";
+import TransactionModal from "@/components/TransactionModal";
+import { Transaction } from "@/models/Transaction";
+import { useFinance } from "@/context/FinanceContext";
 
 export default function TransactionsPage() {
+  const { role } = useFinance(); // ✅ get role
+
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState<Transaction | null>(null);
+
   return (
     <div className="max-w-6xl mx-auto space-y-6 pb-10 relative">
 
@@ -22,15 +31,22 @@ export default function TransactionsPage() {
           </p>
         </div>
 
-        <button
-          className="relative px-5 py-2.5 rounded-xl text-white font-medium
-          bg-[#4a9eb3]
-          shadow-md hover:shadow-[0_0_20px_rgba(74,158,179,0.4)]
-          hover:scale-[1.03] active:scale-[0.97]
-          transition-all duration-200"
-        >
-          + Add Transaction
-        </button>
+        {/* ✅ ADMIN ONLY BUTTON */}
+        {role === "admin" && (
+          <button
+            onClick={() => {
+              setSelected(null); // ➕ new transaction
+              setOpen(true);
+            }}
+            className="relative px-5 py-2.5 rounded-xl text-white font-medium
+            bg-[#4a9eb3]
+            shadow-md hover:shadow-[0_0_20px_rgba(74,158,179,0.4)]
+            hover:scale-[1.03] active:scale-[0.97]
+            transition-all duration-200"
+          >
+            + Add Transaction
+          </button>
+        )}
       </div>
 
       {/* 🔥 Filter Section */}
@@ -67,10 +83,21 @@ export default function TransactionsPage() {
 
         {/* Table/List */}
         <div className="p-4">
-          <TransactionTable />
+          <TransactionTable
+            onEdit={(tx) => {
+              setSelected(tx); // ✏️ edit mode
+              setOpen(true);
+            }}
+          />
         </div>
       </div>
 
+      {/* ✅ MODAL */}
+      <TransactionModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        existing={selected}
+      />
     </div>
   );
 }

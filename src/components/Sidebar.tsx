@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LayoutDashboard, ArrowLeftRight, BarChart3 } from "lucide-react";
+import { useFinance } from "@/context/FinanceContext";
 
 const links = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -12,6 +13,7 @@ const links = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const { role, setRole } = useFinance();
 
   return (
     <div
@@ -61,6 +63,35 @@ export default function Sidebar() {
           );
         })}
       </nav>
+
+{/* 🔥 Role Toggle */}
+<div className="mt-8 mb-4">
+  <p className="text-xs text-gray-500 mb-2">Mode</p>
+
+  <div className="flex bg-[#020617] border border-[#334155] rounded-lg p-1">
+    <button
+      onClick={() => setRole("viewer")}
+      className={`flex-1 text-xs py-1 rounded-md transition ${
+        role === "viewer"
+          ? "bg-[#4a9eb3] text-white"
+          : "text-gray-400 hover:text-white"
+      }`}
+    >
+      Viewer
+    </button>
+
+    <button
+      onClick={() => setRole("admin")}
+      className={`flex-1 text-xs py-1 rounded-md transition ${
+        role === "admin"
+          ? "bg-[#4a9eb3] text-white"
+          : "text-gray-400 hover:text-white"
+      }`}
+    >
+      Admin
+    </button>
+  </div>
+</div>
 
       {/* Footer */}
       <div className="mt-auto text-xs text-gray-500">

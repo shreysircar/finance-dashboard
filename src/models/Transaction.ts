@@ -1,7 +1,8 @@
 export type TransactionType = "income" | "expense";
 
 export interface TransactionProps {
-  id: number;
+  id: string; // ✅ ALWAYS string (important)
+  title: string; // ✅ needed for UI
   date: string;
   amount: number;
   category: string;
@@ -9,7 +10,8 @@ export interface TransactionProps {
 }
 
 export class Transaction {
-  id: number;
+  id: string;
+  title: string;
   date: string;
   amount: number;
   category: string;
@@ -17,13 +19,14 @@ export class Transaction {
 
   constructor(props: TransactionProps) {
     this.id = props.id;
+    this.title = props.title;
     this.date = props.date;
     this.amount = props.amount;
     this.category = props.category;
     this.type = props.type;
   }
 
-  // 🧠 Derived logic (OOP thinking)
+  // 🧠 Derived logic
   isExpense() {
     return this.type === "expense";
   }

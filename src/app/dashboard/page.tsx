@@ -4,8 +4,6 @@ import { useFinance } from "@/context/FinanceContext";
 import BalanceChart from "@/components/BalanceChart";
 import CategoryPieChart from "@/components/CategoryPieChart";
 import SummaryCard from "@/components/SummaryCard";
-import RoleSwitcher from "@/components/RoleSwitcher";
-import { useRole } from "@/context/RoleContext";
 
 import {
   calculateBalance,
@@ -15,7 +13,6 @@ import {
 
 export default function DashboardPage() {
   const { transactions } = useFinance();
-  const { role } = useRole();
   const balance = calculateBalance(transactions);
   const income = calculateIncome(transactions);
   const expenses = calculateExpenses(transactions);
@@ -35,14 +32,6 @@ export default function DashboardPage() {
     </p>
   </div>
 
-  {/* 🔥 Right Controls */}
-  <div className="flex items-center gap-4">
-
-    {/* Role Switcher */}
-    <RoleSwitcher />
-
-
-  </div>
 </div>
       {/* ✅ Summary Cards (now direct + smarter) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
