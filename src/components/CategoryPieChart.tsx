@@ -1,11 +1,12 @@
 "use client";
-
+import { Sector } from "recharts";
 import {
   PieChart,
   Pie,
   Cell,
   Tooltip,
   ResponsiveContainer,
+  
 } from "recharts";
 import { Transaction } from "@/models/Transaction";
 
@@ -66,33 +67,67 @@ export default function CategoryPieChart({ transactions }: Props) {
           </div>
         ) : (
           <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={data}
-                dataKey="value"
-                innerRadius={75}
-                outerRadius={105}
-                paddingAngle={3}
-                stroke="none"
-              >
-{data.map((_, index) => (
-  <Cell
-    key={index}
-    fill={getDistinctColor(index)}
-  />
-))}
-              </Pie>
+<PieChart>
+ <Pie
+  data={data}
+  dataKey="value"
+  innerRadius={75}
+  outerRadius={105}
+  paddingAngle={3}
+  stroke="none"
+>
+  {data.map((_, index) => (
+    <Cell
+      key={index}
+      fill={getDistinctColor(index)}
+      style={{
+        transition: "all 0.2s ease",
+        cursor: "pointer",
+      }}
+      className="hover:opacity-60"
+    />
+  ))}
+</Pie>
 
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "#020617",
-                  border: "1px solid #334155",
-                  borderRadius: "12px",
-                  color: "#fff",
-                }}
-                labelStyle={{ color: "#94a3b8" }}
-              />
-            </PieChart>
+  {/* 🔥 Custom Tooltip */}
+  <Tooltip
+    cursor={{ fill: "transparent" }} // remove hover overlay
+    wrapperStyle={{
+      outline: "none",
+      pointerEvents: "none",
+    }}
+    content={({ active, payload }) => {
+  if (active && payload && payload.length) {
+    const item = payload[0];
+
+    const name = item?.name ?? "Unknown";
+    const value =
+      typeof item?.value === "number" ? item.value : 0;
+
+    return (
+      <div
+        className="
+          backdrop-blur-md
+          bg-[#020617]/80
+          border border-white/10
+          rounded-xl
+          px-3 py-2
+          shadow-lg
+          text-xs
+        "
+      >
+        <p className="text-gray-400">{name}</p>
+        <p className="text-white font-medium">
+          ₹ {value.toLocaleString()}
+        </p>
+      </div>
+    );
+  }
+  return null;
+}}
+    position={{ x: 20, y: 20 }} // 🔥 FIX: keeps tooltip top-left (no overlap)
+  />
+</PieChart>
           </ResponsiveContainer>
         )}
 

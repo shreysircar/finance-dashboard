@@ -18,17 +18,18 @@ export default function Sidebar() {
   return (
     <div
       className="
-        w-64 h-screen
-        bg-gradient-to-b from-[#020617] to-[#020617]/80
-        border-r border-[#1f2937]
+        w-64 h-screen sticky top-0
+        bg-[#020617]/95
+        backdrop-blur-xl
+        border-r border-white/5
         text-gray-300
-        p-6 flex flex-col
+        px-5 py-6 flex flex-col
       "
     >
       {/* Logo */}
       <div className="mb-10">
         <h1 className="text-xl font-semibold text-white tracking-tight">
-          💰 Finance
+          Finance
         </h1>
         <p className="text-xs text-gray-500 mt-1">
           Manage your money
@@ -36,7 +37,7 @@ export default function Sidebar() {
       </div>
 
       {/* Nav */}
-      <nav className="flex flex-col gap-2">
+      <nav className="flex flex-col gap-1">
         {links.map((link) => {
           const isActive = pathname === link.href;
           const Icon = link.icon;
@@ -46,56 +47,76 @@ export default function Sidebar() {
               key={link.href}
               href={link.href}
               className={`
-                flex items-center gap-3
-                px-4 py-2.5 rounded-xl text-sm
-                transition-all duration-200 ease-out
+                relative flex items-center gap-3
+                px-4 py-2.5 rounded-lg text-sm
+                transition-all duration-200
                 ${
                   isActive
-                    ? "bg-[#4a9eb3]/15 text-[#4a9eb3]"
+                    ? "bg-white/10 text-white"
                     : "text-gray-400 hover:bg-white/5 hover:text-white"
                 }
               `}
             >
-              <Icon size={18} strokeWidth={2} />
+              {/* Active left bar */}
+              {isActive && (
+                <span className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-[3px] bg-[#4a9eb3] rounded-r-full" />
+              )}
 
+              <Icon size={18} strokeWidth={2} />
               <span>{link.name}</span>
             </Link>
           );
         })}
       </nav>
 
-{/* 🔥 Role Toggle */}
-<div className="mt-8 mb-4">
-  <p className="text-xs text-gray-500 mb-2">Mode</p>
+      {/* 🔥 Translucent Toggle */}
+      <div className="mt-8">
+        <p className="text-xs text-gray-500 mb-3">Mode</p>
 
-  <div className="flex bg-[#020617] border border-[#334155] rounded-lg p-1">
-    <button
-      onClick={() => setRole("viewer")}
-      className={`flex-1 text-xs py-1 rounded-md transition ${
-        role === "viewer"
-          ? "bg-[#4a9eb3] text-white"
-          : "text-gray-400 hover:text-white"
-      }`}
-    >
-      Viewer
-    </button>
+        <div
+          className="
+            relative w-full h-9 rounded-full
+            bg-white/5 backdrop-blur-xl
+            border border-white/10
+            p-1
+          "
+        >
+          {/* Sliding pill */}
+          <div
+            className={`
+              absolute top-1 bottom-1 w-1/2 rounded-full
+              bg-[#4a9eb3]/80 backdrop-blur-md
+              transition-all duration-300
+              ${role === "admin" ? "left-1/2" : "left-1"}
+            `}
+          />
 
-    <button
-      onClick={() => setRole("admin")}
-      className={`flex-1 text-xs py-1 rounded-md transition ${
-        role === "admin"
-          ? "bg-[#4a9eb3] text-white"
-          : "text-gray-400 hover:text-white"
-      }`}
-    >
-      Admin
-    </button>
-  </div>
-</div>
+          {/* Labels */}
+          <div className="relative flex h-full text-xs font-medium">
+            <button
+              onClick={() => setRole("viewer")}
+              className={`flex-1 z-10 transition ${
+                role === "viewer" ? "text-white" : "text-gray-400"
+              }`}
+            >
+              Viewer
+            </button>
+
+            <button
+              onClick={() => setRole("admin")}
+              className={`flex-1 z-10 transition ${
+                role === "admin" ? "text-white" : "text-gray-400"
+              }`}
+            >
+              Admin
+            </button>
+          </div>
+        </div>
+      </div>
 
       {/* Footer */}
-      <div className="mt-auto text-xs text-gray-500">
-        © 2026 Finance App
+      <div className="mt-auto text-xs text-gray-500 pt-4 border-t border-white/5">
+        © 2026 Finance Dashboard By Shrey
       </div>
     </div>
   );
