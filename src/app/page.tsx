@@ -20,7 +20,7 @@ export default function HomePage() {
 
   return (<div className="relative w-full flex items-center justify-center">
 
-  {/* 🔥 Animated Glow Orbs */}
+  {/*Animated Glow Orbs */}
   <div className="absolute top-[-100px] left-[-100px] w-72 h-72 bg-[#4a9eb3]/20 blur-3xl rounded-full animate-float" />
   <div className="absolute bottom-[-120px] right-[-100px] w-72 h-72 bg-[#025a6a]/20 blur-3xl rounded-full animate-float" />
 
@@ -29,14 +29,14 @@ export default function HomePage() {
 
     <div>
       <h1 className="text-3xl font-semibold">
-        Welcome 👋
+        Welcome 
       </h1>
       <p className="text-sm text-gray-400 mt-1">
         Let’s personalize your dashboard
       </p>
     </div>
 
-    {/* ✨ Input with glow focus */}
+    {/*  Input with glow focus */}
     <input
       type="text"
       placeholder="Enter your name"

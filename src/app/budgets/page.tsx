@@ -13,7 +13,7 @@ export default function BudgetsPage() {
   const [budgetLimits, setBudgetLimits] = useState<BudgetMap>({});
   const [tempValues, setTempValues] = useState<BudgetMap>({});
 
-  // 🔹 Load budgets
+  // Load budgets
   useEffect(() => {
     const stored = localStorage.getItem("budgets");
     if (stored) {
@@ -23,13 +23,13 @@ export default function BudgetsPage() {
     }
   }, []);
 
-  // 🔹 Save budgets
+  // Save budgets
   const handleSave = () => {
     setBudgetLimits(tempValues);
     localStorage.setItem("budgets", JSON.stringify(tempValues));
   };
 
-  // 🔹 Calculate spending
+  // Calculate spending
   const spendingMap: Record<string, number> = {};
 
   (transactions || []).forEach((t) => {

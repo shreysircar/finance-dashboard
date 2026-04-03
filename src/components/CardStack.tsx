@@ -48,10 +48,10 @@ export default function CardStack() {
           }
           className="absolute w-full cursor-pointer transition-all duration-500 ease-in-out"
           style={{
-            top: `${index * 28}px`,            // 🔥 increased spacing (was 18)
-            left: `${index * 6}px`,            // ✨ slight horizontal shift
+            top: `${index * 28}px`,            //  increased spacing (was 18)
+            left: `${index * 6}px`,            //  slight horizontal shift
             zIndex: cards.length - index,
-            transform: `scale(${1 - index * 0.04})`, // 🔥 less aggressive scaling
+            transform: `scale(${1 - index * 0.04})`, //  less aggressive scaling
           }}
         >
           <CardItem {...card} isActive={index === 0} />

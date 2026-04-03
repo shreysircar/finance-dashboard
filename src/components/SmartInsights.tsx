@@ -19,7 +19,7 @@ export default function SmartInsights() {
     );
   }
 
-  // 🔹 1. Category-wise expense
+  // 1. Category-wise expense
   const categoryMap: Record<string, number> = {};
 
   transactions.forEach((t) => {
@@ -33,7 +33,7 @@ export default function SmartInsights() {
     (a, b) => b[1] - a[1]
   )[0];
 
-  // 🔹 2. Monthly comparison
+  //  2. Monthly comparison
   const now = new Date();
   const currentMonth = now.getMonth();
   const lastMonth = currentMonth - 1;
@@ -74,7 +74,7 @@ export default function SmartInsights() {
       {/* Title */}
       <h2 className="text-sm text-gray-400">Smart Insights</h2>
 
-      {/* 🥇 Top Category */}
+      {/*  Top Category */}
       {topCategory && (
         <div className="flex items-start gap-2 text-sm text-gray-300 bg-[#1e293b] px-3 py-2 rounded-md">
           <Trophy size={14} className="mt-0.5 text-yellow-400 shrink-0" />
@@ -88,7 +88,7 @@ export default function SmartInsights() {
         </div>
       )}
 
-      {/* 📈 Monthly Trend */}
+      {/*  Monthly Trend */}
       <div className="flex items-start gap-2 text-sm text-gray-300 bg-[#1e293b] px-3 py-2 rounded-md">
         {change >= 0 ? (
           <TrendingUp size={14} className="mt-0.5 text-red-400 shrink-0" />
@@ -109,7 +109,7 @@ export default function SmartInsights() {
         </span>
       </div>
 
-      {/* 💡 Suggestion */}
+      {/*  Suggestion */}
       <div className="flex items-start gap-2 text-sm text-gray-300 bg-[#1e293b] px-3 py-2 rounded-md">
         <Lightbulb size={14} className="mt-0.5 text-yellow-400 shrink-0" />
         <span>{suggestion}</span>

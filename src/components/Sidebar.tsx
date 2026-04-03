@@ -70,7 +70,7 @@ export default function Sidebar() {
         })}
       </nav>
 
-      {/* 🔥 Translucent Toggle */}
+      {/* Translucent Toggle */}
       <div className="mt-8">
         <p className="text-xs text-gray-500 mb-3">Mode</p>
 

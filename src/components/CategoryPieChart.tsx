@@ -89,7 +89,7 @@ export default function CategoryPieChart({ transactions }: Props) {
   ))}
 </Pie>
 
-  {/* 🔥 Custom Tooltip */}
+  {/*  Custom Tooltip */}
   <Tooltip
     cursor={{ fill: "transparent" }} // remove hover overlay
     wrapperStyle={{
@@ -125,7 +125,7 @@ export default function CategoryPieChart({ transactions }: Props) {
   }
   return null;
 }}
-    position={{ x: 20, y: 20 }} // 🔥 FIX: keeps tooltip top-left (no overlap)
+    position={{ x: 20, y: 20 }} //  FIX: keeps tooltip top-left (no overlap)
   />
 </PieChart>
           </ResponsiveContainer>

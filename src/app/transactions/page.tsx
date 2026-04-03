@@ -11,7 +11,7 @@ import { useFinance } from "@/context/FinanceContext";
 import { useRole } from "@/context/RoleContext";
 
 export default function TransactionsPage() {
-  const { role } = useRole(); // ✅ FIXED
+  const { role } = useRole(); // FIXED
   const { transactions } = useFinance();
 
   const [open, setOpen] = useState(false);
@@ -35,7 +35,7 @@ export default function TransactionsPage() {
           </p>
         </div>
 
-        {/* 🔥 ADMIN ONLY */}
+        {/* ADMIN ONLY */}
         <AdminOnly>
           <button
             onClick={() => {
@@ -73,7 +73,7 @@ export default function TransactionsPage() {
         <div className="p-4">
           <TransactionTable
             onEdit={(tx) => {
-              if (role !== "admin") return; // 🔒 extra safety
+              if (role !== "admin") return; // extra safety
               setSelected(tx);
               setOpen(true);
             }}
@@ -81,7 +81,7 @@ export default function TransactionsPage() {
         </div>
       </div>
 
-      {/* 🔥 ADMIN ONLY MODAL */}
+      {/*  ADMIN ONLY MODAL */}
       <AdminOnly>
         <TransactionModal
           isOpen={open}

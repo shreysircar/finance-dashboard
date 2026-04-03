@@ -10,7 +10,7 @@ export default function FilterBar() {
   return (
     <div className="flex flex-col md:flex-row md:items-center gap-4">
       
-      {/* 🔍 Search */}
+      {/*  Search */}
       <input
         type="text"
         placeholder="Search category..."
@@ -21,7 +21,7 @@ export default function FilterBar() {
         }
       />
 
-      {/* 🔥 Filter Chips */}
+      {/*  Filter Chips */}
       <div className="flex gap-2">
         {types.map((type) => (
           <button

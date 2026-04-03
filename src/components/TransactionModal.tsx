@@ -22,7 +22,7 @@ export default function TransactionModal({
     amount: "",
     category: "",
     date: "",
-    type: "expense" as "income" | "expense", // ✅ ADD THIS
+    type: "expense" as "income" | "expense",
   });
 
 useEffect(() => {

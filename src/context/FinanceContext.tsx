@@ -4,17 +4,17 @@ import { createContext, useContext, useState } from "react";
 import { Transaction } from "@/models/Transaction";
 import { transactions as initialData } from "@/data/transactions";
 
-// 🔐 Role Type
+//  Role Type
 type Role = "admin" | "viewer";
 
-// 🔍 Filter Type (we'll use this later)
+//  Filter Type (we'll use this later)
 interface Filters {
   type: "all" | "income" | "expense";
   category: string;
   search: string;
 }
 
-// 🧠 Context Shape
+// Context Shape
 interface FinanceContextType {
   transactions: Transaction[];
   role: Role;
@@ -24,14 +24,14 @@ interface FinanceContextType {
   setFilters: (filters: Filters) => void;
 
   addTransaction: (t: Transaction) => void;
-  updateTransaction: (t: Transaction) => void; // ✅ ADDED
-  deleteTransaction: (id: string) => void; // ✅ FIXED
+  updateTransaction: (t: Transaction) => void; 
+  deleteTransaction: (id: string) => void; 
 }
 
-// 📦 Create Context
+//  Create Context
 const FinanceContext = createContext<FinanceContextType | undefined>(undefined);
 
-// 🚀 Provider
+// Provider
 export const FinanceProvider = ({
   children,
 }: {
@@ -48,7 +48,7 @@ export const FinanceProvider = ({
     search: "",
   });
 
-  // ➕ Add Transaction
+  // Add Transaction
   const addTransaction = (t: Transaction) => {
     setTransactions((prev) => [...prev, t]);
   };
@@ -59,7 +59,7 @@ const updateTransaction = (updated: Transaction) => {
   );
 };
 
-  // ❌ Delete Transaction
+  // Delete Transaction
 const deleteTransaction = (id: string) => {
   setTransactions((prev) => prev.filter((t) => t.id !== id));
 };
@@ -81,7 +81,7 @@ const deleteTransaction = (id: string) => {
   );
 };
 
-// 🧩 Custom Hook
+//  Custom Hook
 export const useFinance = () => {
   const context = useContext(FinanceContext);
 

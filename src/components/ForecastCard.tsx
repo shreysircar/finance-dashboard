@@ -1,48 +1,55 @@
 "use client";
 
-import { useFinance } from "@/context/FinanceContext";
+import { Transaction } from "@/models/Transaction";
 
-export default function ForecastCard() {
-  const { transactions } = useFinance();
+type Props = {
+  transactions: Transaction[];
+};
 
-  // 🔹 Get last 2 months expense totals
-  const monthlyMap: Record<string, number> = {};
+export default function ForecastCard({ transactions }: Props) {
+  const now = new Date();
+  const currentMonth = now.getMonth();
+  const lastMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+
+  let currentSpend = 0;
+  let lastSpend = 0;
 
   transactions.forEach((t) => {
-    if (t.type === "expense") {
-      const date = new Date(t.date);
-      const key = `${date.getFullYear()}-${date.getMonth()}`;
-      monthlyMap[key] = (monthlyMap[key] || 0) + t.amount;
+    if (t.isExpense()) {
+      const d = new Date(t.date);
+
+      if (d.getMonth() === currentMonth) {
+        currentSpend += t.amount;
+      }
+
+      if (d.getMonth() === lastMonth) {
+        lastSpend += t.amount;
+      }
     }
   });
 
-  const months = Object.entries(monthlyMap).sort(
-    (a, b) => new Date(a[0]).getTime() - new Date(b[0]).getTime()
-  );
+  //  Simple projection (trend-based)
+  let projected = currentSpend;
 
-  if (months.length < 2) {
-    return (
-      <div className="p-5 rounded-xl bg-[#0f172a] border border-[#334155]">
-        <p className="text-sm text-gray-400">
-          Not enough data for forecast
-        </p>
-      </div>
-    );
+  if (lastSpend > 0) {
+    const growth = (currentSpend - lastSpend) / lastSpend;
+    projected = currentSpend * (1 + growth);
   }
 
-  const last = months[months.length - 1][1];
-  const prev = months[months.length - 2][1];
+  const changePercent =
+    lastSpend > 0
+      ? ((currentSpend - lastSpend) / lastSpend) * 100
+      : 0;
 
-  // 🔹 Simple projection (trend-based)
-  const growthRate = prev === 0 ? 0 : (last - prev) / prev;
-  const forecast = Math.round(last * (1 + growthRate));
+  const isIncrease = changePercent >= 0;
 
   return (
-    <div className="p-5 rounded-xl bg-[#0f172a] border border-[#334155] space-y-3">
+    <div className="bg-white/5 backdrop-blur-md border border-white/10 p-5 rounded-2xl space-y-3 shadow-lg">
+      
       <h2 className="text-sm text-gray-400">Forecast</h2>
 
       <div className="text-2xl font-semibold text-white">
-        ₹{forecast.toLocaleString()}
+        ₹{Math.round(projected)}
       </div>
 
       <div className="text-sm text-gray-400">
@@ -51,11 +58,10 @@ export default function ForecastCard() {
 
       <div
         className={`text-sm ${
-          growthRate >= 0 ? "text-red-400" : "text-green-400"
+          isIncrease ? "text-red-400" : "text-green-400"
         }`}
       >
-        {growthRate >= 0 ? "↑" : "↓"}{" "}
-        {(growthRate * 100).toFixed(1)}% from last month
+        {isIncrease ? "↑" : "↓"} {Math.abs(changePercent).toFixed(0)}% from this month
       </div>
     </div>
   );

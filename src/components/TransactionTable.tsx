@@ -10,7 +10,7 @@ export default function TransactionTable({
   onEdit?: (t: Transaction) => void;
 }) {
   const { transactions, deleteTransaction, filters } = useFinance();
-  const { role } = useRole(); // ✅ FIXED
+  const { role } = useRole(); 
 
   const filteredTransactions = transactions.filter((t) => {
     const matchesType =

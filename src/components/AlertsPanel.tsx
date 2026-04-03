@@ -11,7 +11,7 @@ type Props = {
 export default function AlertsPanel({ transactions, budgets = {} }: Props) {
   const alerts: string[] = [];
 
-  // 🔹 1. Budget Overspending
+  // 1. Budget Overspending
   const categorySpend: Record<string, number> = {};
 
   transactions.forEach((t) => {
@@ -30,7 +30,7 @@ export default function AlertsPanel({ transactions, budgets = {} }: Props) {
     }
   });
 
-  // 🔹 2. Spending Increase (this month vs last month)
+  //  2. Spending Increase (this month vs last month)
   const now = new Date();
   const currentMonth = now.getMonth();
   const lastMonth = currentMonth === 0 ? 11 : currentMonth - 1;
@@ -53,7 +53,7 @@ export default function AlertsPanel({ transactions, budgets = {} }: Props) {
     }
   }
 
-  // 🔹 3. Savings Rate Drop
+  //  3. Savings Rate Drop
   let income = 0;
   let expense = 0;
 

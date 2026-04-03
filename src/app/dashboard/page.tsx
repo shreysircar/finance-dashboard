@@ -39,7 +39,7 @@ useEffect(() => {
 }, []);
   
 
-  // ✅ Greeting logic
+  // Greeting logic
   const hour = new Date().getHours();
   const greeting =
     hour < 12
@@ -58,7 +58,7 @@ useEffect(() => {
             Dashboard
           </h1>
 
-          {/* ✅ NEW Greeting */}
+          {/* NEW Greeting */}
           <p className="text-gray-400 text-sm mt-1">
            {greeting} {username ? `, ${username}` : ""}  — here's your financial overview
           </p>
@@ -70,32 +70,32 @@ useEffect(() => {
         </span>
       </div>
 
-      {/* ✅ Summary Cards (TOP PRIORITY) */}
+      {/* Summary Cards (TOP PRIORITY) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <SummaryCard title="Total Balance" value={balance} isCurrency />
         <SummaryCard title="Income" value={income} isCurrency />
         <SummaryCard title="Expenses" value={expenses} isCurrency />
       </div>
 
-      {/* 🔥 ADMIN ONLY → Quick Actions */}
+      {/* ADMIN ONLY → Quick Actions */}
       <AdminOnly>
         <QuickActions />
       </AdminOnly>
 
-      {/* ✅ Cards + Recent Transactions (moved here) */}
+      {/* Cards + Recent Transactions (moved here) */}
       <div
         className={`grid gap-5 items-start ${
           role === "viewer" ? "lg:grid-cols-2" : "grid-cols-1"
         }`}
       >
-        {/* 👤 Viewer Only */}
+        {/* Viewer Only */}
         {role === "viewer" && (
           <div className="flex items-start justify-center lg:justify-start">
             <CardStack />
           </div>
         )}
 
-        {/* 👥 Both */}
+        {/* Both */}
         <div className="w-full">
           <RecentTransactions transactions={transactions} />
         </div>
@@ -113,7 +113,7 @@ useEffect(() => {
       </div>
 
 
-      {/* 🔥 Budget + Insights */}
+      {/* Budget + Insights */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="col-span-1">
           <BudgetWidget transactions={transactions} role={role} />
@@ -125,7 +125,7 @@ useEffect(() => {
       </div>
 
 
-      {/* 🔥 ADMIN ONLY */}
+      {/* ADMIN ONLY */}
 <AdminOnly>
   <AlertsPanel transactions={transactions} budgets={budgets} />
 </AdminOnly>

@@ -56,19 +56,19 @@ export default function CardItem({
         })`,
       }}
     >
-      {/* ✨ Top light reflection */}
+      {/*  Top light reflection */}
       <div className="absolute top-0 left-0 w-full h-[40%] bg-white/10 blur-xl opacity-40" />
 
-      {/* 🌫️ Glow */}
+      {/*  Glow */}
       <div className="absolute -top-20 -right-20 w-60 h-60 bg-white/10 blur-3xl rounded-full" />
 
-      {/* 🧊 Glass overlay */}
+      {/*  Glass overlay */}
       <div className="absolute inset-0 bg-white/5 backdrop-blur-[3px]" />
 
-      {/* 🔲 Border */}
+      {/*  Border */}
       <div className="absolute inset-0 rounded-2xl border border-white/10" />
 
-      {/* 💳 Content */}
+      {/*  Content */}
       <div className="relative h-full flex flex-col justify-between">
 
         {/* Top */}

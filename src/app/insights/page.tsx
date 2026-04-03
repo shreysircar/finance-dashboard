@@ -7,7 +7,7 @@ import AdminOnly from "@/components/AdminOnly";
 import SummaryCard from "@/components/SummaryCard";
 import CategoryBarChart from "@/components/CategoryBarChart";
 
-// 🔥 NEW COMPONENTS
+// NEW COMPONENTS
 import TopCategories from "@/components/TopCategories";
 import ExportActions from "@/components/ExportActions";
 import ForecastCard from "@/components/ForecastCard";
@@ -44,13 +44,13 @@ export default function InsightsPage() {
           </p>
         </div>
 
-        {/* 🔥 Role Badge */}
+        {/*  Role Badge */}
         <span className="text-sm px-3 py-1 rounded-full bg-[#1e293b] text-gray-300">
           {role === "admin" ? "Admin Mode" : "Viewer Mode"}
         </span>
       </div>
 
-      {/* 🔥 ADMIN ONLY: Export */}
+      {/*  ADMIN ONLY: Export */}
       <AdminOnly>
         <ExportActions />
       </AdminOnly>
@@ -81,7 +81,7 @@ export default function InsightsPage() {
         <CategoryBarChart transactions={transactions} />
       </div>
 
-      {/* 🔥 NEW: Top Categories */}
+      {/*  NEW: Top Categories */}
       <TopCategories />
 
       {/* Insight Box */}
@@ -99,9 +99,9 @@ export default function InsightsPage() {
         </p>
       </div>
 
-      {/* 🔥 ADMIN ONLY: Forecast */}
+      {/*  ADMIN ONLY: Forecast */}
       <AdminOnly>
-        <ForecastCard />
+  <ForecastCard transactions={transactions} />
       </AdminOnly>
 
     </div>

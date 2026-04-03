@@ -56,7 +56,7 @@ export default function CategoryBarChart({ transactions }: Props) {
       <div className="w-full h-[260px]">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data}>
-            {/* 🔹 PATTERN DEF (pencil shading) */}
+            {/*  PATTERN DEF (pencil shading) */}
             <defs>
               <pattern
                 id="pencilPattern"
@@ -106,10 +106,10 @@ export default function CategoryBarChart({ transactions }: Props) {
 
             <Bar
               dataKey="amount"
-              fill="url(#pencilPattern)" // 🔹 default shaded
+              fill="url(#pencilPattern)" //  default shaded
               radius={[6, 6, 0, 0]}
               activeBar={{
-                fill: "#4a9eb3", // 🔹 solid on hover
+                fill: "#4a9eb3", //  solid on hover
               }}
             />
           </BarChart>

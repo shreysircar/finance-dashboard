@@ -21,12 +21,12 @@ type Props = {
 export default function BalanceChart({ transactions }: Props) {
   const [mode, setMode] = useState<Mode>("monthly");
 
-  // ✅ 1. sort transactions
+  //  1. sort transactions
   const sorted = [...transactions].sort(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
   );
 
-  // ✅ 2. group data
+  //  2. group data
   const grouped: Record<string, number> = {};
 
   sorted.forEach((t) => {
@@ -41,7 +41,7 @@ export default function BalanceChart({ transactions }: Props) {
     grouped[key] = (grouped[key] || 0) + value;
   });
 
-  // ✅ 3. build final data (with gap filling for monthly)
+  //  3. build final data (with gap filling for monthly)
   const sortedKeys = Object.keys(grouped).sort((a, b) =>
     a.localeCompare(b)
   );
