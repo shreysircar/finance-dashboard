@@ -13,7 +13,10 @@ type Props = {
   transactions: Transaction[];
 };
 
-const COLORS = ["#4a9eb3", "#22c55e", "#f59e0b", "#ef4444", "#a78bfa"];
+const getDistinctColor = (index: number) => {
+  const hue = (index * 137.508) % 360; // golden angle
+  return `hsl(${hue}, 70%, 55%)`;
+};
 
 export default function CategoryPieChart({ transactions }: Props) {
   const categoryMap: Record<string, number> = {};
@@ -72,12 +75,12 @@ export default function CategoryPieChart({ transactions }: Props) {
                 paddingAngle={3}
                 stroke="none"
               >
-                {data.map((_, index) => (
-                  <Cell
-                    key={index}
-                    fill={COLORS[index % COLORS.length]}
-                  />
-                ))}
+{data.map((_, index) => (
+  <Cell
+    key={index}
+    fill={getDistinctColor(index)}
+  />
+))}
               </Pie>
 
               <Tooltip

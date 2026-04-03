@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   LineChart,
   Line,
@@ -11,21 +12,88 @@ import {
 } from "recharts";
 import { Transaction } from "@/models/Transaction";
 
+type Mode = "monthly" | "yearly";
+
 type Props = {
   transactions: Transaction[];
 };
 
 export default function BalanceChart({ transactions }: Props) {
+  const [mode, setMode] = useState<Mode>("monthly");
+
+  // ✅ 1. sort transactions
+  const sorted = [...transactions].sort(
+    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+  );
+
+  // ✅ 2. group data
+  const grouped: Record<string, number> = {};
+
+  sorted.forEach((t) => {
+    const d = new Date(t.date);
+
+    const key =
+      mode === "monthly"
+        ? `${d.getFullYear()}-${d.getMonth()}`
+        : `${d.getFullYear()}`;
+
+    const value = t.isIncome() ? t.amount : -t.amount;
+    grouped[key] = (grouped[key] || 0) + value;
+  });
+
+  // ✅ 3. build final data (with gap filling for monthly)
+  const sortedKeys = Object.keys(grouped).sort((a, b) =>
+    a.localeCompare(b)
+  );
+
+  const result: { date: string; balance: number }[] = [];
   let runningBalance = 0;
 
-  const data = transactions.map((t) => {
-    runningBalance += t.isIncome() ? t.amount : -t.amount;
+  if (sortedKeys.length > 0) {
+    if (mode === "monthly") {
+      let [startYear, startMonth] = sortedKeys[0].split("-").map(Number);
+      let [endYear, endMonth] = sortedKeys[sortedKeys.length - 1]
+        .split("-")
+        .map(Number);
 
-    return {
-      date: t.date.slice(5),
-      balance: runningBalance,
-    };
-  });
+      let currentYear = startYear;
+      let currentMonth = startMonth;
+
+      while (
+        currentYear < endYear ||
+        (currentYear === endYear && currentMonth <= endMonth)
+      ) {
+        const key = `${currentYear}-${currentMonth}`;
+
+        if (grouped[key]) {
+          runningBalance += grouped[key];
+        }
+
+        result.push({
+          date: key,
+          balance: runningBalance,
+        });
+
+        currentMonth++;
+        if (currentMonth > 11) {
+          currentMonth = 0;
+          currentYear++;
+        }
+      }
+    } else {
+      // yearly mode
+      sortedKeys.forEach((key) => {
+        runningBalance += grouped[key];
+
+        result.push({
+          date: key,
+          balance: runningBalance,
+        });
+      });
+    }
+  }
+
+  const data = result;
 
   return (
     <div
@@ -41,20 +109,46 @@ export default function BalanceChart({ transactions }: Props) {
       {/* subtle glow */}
       <div className="absolute inset-0 rounded-2xl bg-white/5 opacity-0 hover:opacity-100 transition pointer-events-none" />
 
-      {/* Header */}
-      <h2 className="text-lg font-semibold text-white mb-1">
-        Balance Trend
-      </h2>
-      <p className="text-sm text-gray-400 mb-5">
-        Track your financial growth over time
-      </p>
+      {/* Header + Toggle */}
+      <div className="flex justify-between items-center mb-5">
+        <div>
+          <h2 className="text-lg font-semibold text-white">
+            Balance Trend
+          </h2>
+          <p className="text-sm text-gray-400">
+            Track your financial growth over time
+          </p>
+        </div>
+
+        {/* Toggle */}
+        <div className="flex bg-[#020617] border border-[#334155] rounded-lg overflow-hidden text-sm">
+          <button
+            onClick={() => setMode("monthly")}
+            className={`px-3 py-1 ${
+              mode === "monthly"
+                ? "bg-[#4a9eb3] text-white"
+                : "text-gray-400"
+            }`}
+          >
+            Monthly
+          </button>
+          <button
+            onClick={() => setMode("yearly")}
+            className={`px-3 py-1 ${
+              mode === "yearly"
+                ? "bg-[#4a9eb3] text-white"
+                : "text-gray-400"
+            }`}
+          >
+            Yearly
+          </button>
+        </div>
+      </div>
 
       {/* Chart */}
       <div className="w-full h-[260px]">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data}>
-            
-            {/* Softer grid */}
             <CartesianGrid
               stroke="#1f2937"
               strokeDasharray="4 4"
@@ -67,6 +161,13 @@ export default function BalanceChart({ transactions }: Props) {
               tick={{ fontSize: 12 }}
               tickLine={false}
               axisLine={false}
+              tickFormatter={(value) => {
+                if (mode === "monthly") {
+                  const [year, month] = value.split("-");
+                  return `${Number(month) + 1}/${year.slice(2)}`;
+                }
+                return value;
+              }}
             />
 
             <YAxis

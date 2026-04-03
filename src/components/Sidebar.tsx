@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LayoutDashboard, ArrowLeftRight, BarChart3 } from "lucide-react";
-import { useFinance } from "@/context/FinanceContext";
+import { useRole } from "@/context/RoleContext";
 
 const links = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -13,7 +13,7 @@ const links = [
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const { role, setRole } = useFinance();
+  const { role, setRole } = useRole();
 
   return (
     <div

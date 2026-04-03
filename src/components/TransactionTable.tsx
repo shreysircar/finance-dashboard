@@ -1,6 +1,7 @@
 "use client";
 
 import { useFinance } from "@/context/FinanceContext";
+import { useRole } from "@/context/RoleContext";
 import { Transaction } from "@/models/Transaction";
 
 export default function TransactionTable({
@@ -8,7 +9,8 @@ export default function TransactionTable({
 }: {
   onEdit?: (t: Transaction) => void;
 }) {
-  const { transactions, deleteTransaction, role, filters } = useFinance();
+  const { transactions, deleteTransaction, filters } = useFinance();
+  const { role } = useRole(); // ✅ FIXED
 
   const filteredTransactions = transactions.filter((t) => {
     const matchesType =
@@ -24,7 +26,7 @@ export default function TransactionTable({
   return (
     <div className="space-y-2">
 
-      {/* 🔹 Header */}
+      {/* Header */}
       <div
         className={`grid px-5 py-2 text-xs text-gray-500 uppercase tracking-wide
         ${role === "viewer"
@@ -39,7 +41,7 @@ export default function TransactionTable({
         {role === "admin" && <span className="text-right">Actions</span>}
       </div>
 
-      {/* 🔹 Rows */}
+      {/* Rows */}
       {filteredTransactions.map((t) => (
         <div
           key={t.id}
@@ -49,14 +51,14 @@ export default function TransactionTable({
             : "grid-cols-[1.5fr_1fr_1fr_1fr_auto]"
           }
           bg-[#0b1220]
-          px-5 py-3  /* 🔥 reduced height */
+          px-5 py-3
           rounded-xl
           border border-transparent
           hover:border-white/10 hover:bg-[#111827]
           transition-all duration-200`}
         >
 
-          {/* 👀 Title */}
+          {/* Title */}
           {role === "viewer" && (
             <div className="text-sm text-white font-medium truncate">
               {t.title}
@@ -96,7 +98,7 @@ export default function TransactionTable({
             {t.type === "income" ? "+" : "-"} ₹{t.amount}
           </div>
 
-          {/* Actions (INLINE now) */}
+          {/* Actions */}
           {role === "admin" && (
             <div className="flex justify-end gap-2 text-xs opacity-0 group-hover:opacity-100 transition">
               <button
@@ -117,7 +119,7 @@ export default function TransactionTable({
         </div>
       ))}
 
-      {/* 🔹 Empty */}
+      {/* Empty */}
       {filteredTransactions.length === 0 && (
         <div className="text-center text-gray-500 py-12 text-sm">
           No transactions found
