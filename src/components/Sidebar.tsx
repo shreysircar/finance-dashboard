@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, ArrowLeftRight, BarChart3 } from "lucide-react";
+import { LayoutDashboard, ArrowLeftRight, BarChart3, LucideMonitorCheck } from "lucide-react";
 import { useRole } from "@/context/RoleContext";
 
 const links = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Transactions", href: "/transactions", icon: ArrowLeftRight },
   { name: "Insights", href: "/insights", icon: BarChart3 },
+  { name: "Budget", href: "/budgets", icon: LucideMonitorCheck },
 ];
 
 export default function Sidebar() {

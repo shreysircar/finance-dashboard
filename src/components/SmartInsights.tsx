@@ -8,7 +8,12 @@ export default function SmartInsights() {
 
   if (!transactions.length) {
     return (
-      <div className="p-5 rounded-xl bg-[#0f172a] border border-[#334155]">
+      <div className="
+        relative p-5 rounded-xl
+        bg-gradient-to-br from-[#1e293b] to-[#0f172a]
+        border border-[#334155]
+        backdrop-blur-md
+      ">
         <p className="text-sm text-gray-400">No data for insights</p>
       </div>
     );
@@ -58,7 +63,13 @@ export default function SmartInsights() {
       : "Your spending is well balanced";
 
   return (
-    <div className="p-5 rounded-xl bg-[#0f172a] border border-[#334155] space-y-3">
+    <div className="
+      relative p-5 rounded-xl
+      bg-gradient-to-br from-[#1e293b] to-[#0f172a]
+      border border-[#334155]
+      backdrop-blur-md
+      space-y-3
+    ">
       
       {/* Title */}
       <h2 className="text-sm text-gray-400">Smart Insights</h2>

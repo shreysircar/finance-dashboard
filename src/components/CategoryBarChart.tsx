@@ -56,6 +56,22 @@ export default function CategoryBarChart({ transactions }: Props) {
       <div className="w-full h-[260px]">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data}>
+            {/* 🔹 PATTERN DEF (pencil shading) */}
+            <defs>
+              <pattern
+                id="pencilPattern"
+                patternUnits="userSpaceOnUse"
+                width="6"
+                height="6"
+              >
+                <path
+                  d="M0 6L6 0"
+                  stroke="#4a9eb3"
+                  strokeWidth="1"
+                />
+              </pattern>
+            </defs>
+
             <CartesianGrid
               stroke="#1f2937"
               strokeDasharray="4 4"
@@ -90,8 +106,11 @@ export default function CategoryBarChart({ transactions }: Props) {
 
             <Bar
               dataKey="amount"
-              fill="#4a9eb3"
+              fill="url(#pencilPattern)" // 🔹 default shaded
               radius={[6, 6, 0, 0]}
+              activeBar={{
+                fill: "#4a9eb3", // 🔹 solid on hover
+              }}
             />
           </BarChart>
         </ResponsiveContainer>
