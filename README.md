@@ -1,36 +1,157 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💰 Finance Dashboard UI
 
-## Getting Started
+## 🌐 Live Demo
 
-First, run the development server:
+👉 https://finance-dashboard-shrey.vercel.app/
+
+---
+
+## 📌 Overview
+
+This project is a **responsive finance dashboard** designed to help users track, analyze, and understand their financial activity.
+
+It focuses on **clean UI design, modular component structure, and intuitive user experience**, built entirely on the frontend using mock data.
+
+---
+
+## ✨ Features
+
+### 📊 Dashboard Overview
+
+* Summary cards displaying:
+
+  * Total Balance
+  * Total Income
+  * Total Expenses
+* Time-based visualization (balance trend)
+* Category-based visualization (spending breakdown)
+
+---
+
+### 💳 Transactions Section
+
+* Detailed transaction list including:
+
+  * Date
+  * Amount
+  * Category
+  * Type (Income / Expense)
+* Features:
+
+  * 🔍 Search functionality
+  * 🎯 Filtering (by type/category)
+  * 📑 Clean tabular layout
+* Recent Transactions preview on dashboard
+
+---
+
+### 🔐 Role-Based UI (Frontend Simulation)
+
+* **Viewer**
+
+  * Can view all data
+
+* **Admin**
+
+  * Can add/manage transactions
+
+* Role switching implemented via UI toggle for demonstration
+
+---
+
+### 💡 Insights Section
+
+* Automatically generated insights such as:
+
+  * Highest spending category
+  * Spending trends
+  * Useful financial observations
+
+---
+
+### ⚙️ State Management
+
+* Global state handled using **React Context API**
+
+  * Transactions data
+  * Filters
+  * Selected role
+
+---
+
+### 🎨 UI / UX Highlights
+
+* Clean and modern design
+* Glassmorphism-inspired components
+* Responsive layout (mobile, tablet, desktop)
+* Graceful handling of empty states
+* Smooth and intuitive user interactions
+
+---
+
+## 🛠️ Tech Stack
+
+* **Frontend:** Next.js (React)
+* **Styling:** Tailwind CSS
+* **Charts:** Recharts
+* **State Management:** Context API
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/<your-username>/<your-repo-name>.git
+cd <your-repo-name>
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Run the Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 4. Build for Production
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🧠 Approach
 
-To learn more about Next.js, take a look at the following resources:
+The application is built with a **component-driven architecture**, ensuring modularity and scalability.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* UI is divided into independent reusable components
+* Global state is centralized using Context API
+* Mock data is used to simulate real-world financial scenarios
+* Focus was placed on **clarity, usability, and clean design**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## ⚠️ Assumptions
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* Data is static (no backend integration)
+* Role-based behavior is simulated on the frontend
+* Designed primarily to demonstrate frontend architecture and UI thinking
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🔮 Possible Improvements
+
+* Backend integration (API + database)
+* Authentication system
+* Data persistence (local storage / server)
+* Advanced analytics and filters
+* Export functionality (CSV/JSON)
+* Dark mode toggle
+
